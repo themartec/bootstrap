@@ -1,0 +1,29 @@
+name: Build Checks
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # env:
+    #   MISE_DEBUG: 1
+    #   MISE_TRACE: 1
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+
+      - name: Mise run build
+        run: |
+          mise run build || \
+            echo -e "\033[0;33m\n\tcan't expect this to run on linux ¯\_(ツ)_/¯\033[0m"
