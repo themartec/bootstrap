@@ -9,5 +9,6 @@ brew "mise"                   # Polyglot runtime manager (asdf rust clone)
 #
 # Utilities
 #
-brew "aspell"                   # Spell checker with better logic than ispell
-                                # http://aspell.net/
+brew "aspell"                 # Spell checker with better logic than ispell
+                              # http://aspell.net/
+brew "gh"                     # GitHub command-line tool https://cli.github.com/

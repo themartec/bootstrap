@@ -11,7 +11,7 @@ Publicly visible bootstrap and environment checking scripts.
 ```sh
 /bin/bash -c \
   "$(curl -fsSL \
-  https://raw.githubusercontent.com/themartec/bootstrap/refs/heads/master/mise-tasks/pre-check-env.sh)"
+  https://raw.githubusercontent.com/themartec/bootstrap/refs/heads/master/mise-tasks/bootstrap.sh)"
 ```
 
 or if you have it downloaded locally
@@ -20,4 +20,12 @@ or if you have it downloaded locally
 make
 make build
 mise run pre-check-env
+```
+
+## Pre check your environment
+
+```sh
+/bin/bash -c \
+  "$(curl -fsSL \
+  https://raw.githubusercontent.com/themartec/bootstrap/refs/heads/master/mise-tasks/pre-check-env.sh)"
 ```
