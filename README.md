@@ -1,6 +1,10 @@
 # Bootstrap
 
-Publicly visible bootstrap and environment check scripts
+[![Build Checks
+](https://github.com/themartec/bootstrap/actions/workflows/build-checks.yml/badge.svg)
+](https://github.com/themartec/bootstrap/actions/workflows/build-checks.yml)
+
+Publicly visible bootstrap and environment checking scripts.
 
 ## TL;DR
 

@@ -1,15 +1,57 @@
 [tasks.install]
 description = "install all dependencies"
-run = "echo TODO: install goes here"
+run = [
+  """
+  if [ "$(uname)" == "Darwin" ]; \
+    then \
+    echo "running brew bundle using Brewfile\n"; \
+    brew bundle --file Brewfile; \
+  else \
+    echo "running apt upgrade\n"; \
+    sudo apt-get update; \
+    sudo apt-get install -y aspell aspell-en; \
+  fi
+  """,
+  "mise install",
+]
+
+[tasks."check:spelling"]
+description = "Check spelling with aspell"
+depends = ["install"]
+run = """
+  find . -not -path '**/node_modules/*' \
+    -type f \\( -name "*.md" -o -name "*.adoc" \\) \
+    -exec aspell --lang en_AU --home-dir='.' check {} \\;
+"""
 
 [tasks.check]
 description = "check all dependencies"
 depends = ["install", "pre-check-env"]
 run = "echo TODO: check goes here"
 
+[tasks."build:shellcheck"]
+description = "shellcheck scripts"
+depends = ["install"]
+run = [
+  "shellcheck --external-sources --source-path mise-tasks mise-tasks/*"
+]
+
+[tasks."build:check-spelling"]
+description = "Check spelling with aspell"
+depends = ["install"]
+run = """
+  find . \
+    -type f \\( -name "*.md" -o -name "*.adoc" \\) | \
+    xargs cat | \
+    aspell --lang en_AU --home-dir='.' --pipe | \
+    sort | uniq | tee /dev/tty | \
+    grep -c -v -E "(International Ispell Version|\\*|^$)" | \
+    xargs test 0 -eq
+"""
+
 [tasks.build]
 description = "build all the things"
-depends = ["check"]
+depends = ["check", "build:shellcheck", "build:check-spelling"]
 run = "echo TODO: build goes here"
 
 [tasks.clean]
@@ -18,3 +60,4 @@ run = "echo TODO: clean goes here"
 
 [tools]
 node = "22.18.0"
+shellcheck = "0.10.0"
